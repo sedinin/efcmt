@@ -398,6 +398,7 @@ make_fcm_push_path(ProjectId) ->
 reload_access_token(#{service_file := ServiceFile} = State0) ->
     lager:debug("reloading access token"),
     cancel_timer(State0),
+    lager:debug("loading google file: ~p", [ServiceFile]),
     {ok, Bin} = file:read_file(ServiceFile),
     #{project_id := ProjectId} = jsx:decode(Bin, ?JSX_OPTS),
     {ok, #{access_token := AccessToken}} = google_oauth:get_access_token(ServiceFile, ?SCOPE),
