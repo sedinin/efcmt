@@ -191,7 +191,8 @@ connected(info
             gen_statem:reply(From, {error, {Status, FullBody}})
     end,
     Streams1 = maps:remove(StreamRef, Streams0),
-    gun:cancel(GunPid, StreamRef), %% final, closing stream
+    %% do not close stream, debug
+    %% gun:cancel(GunPid, StreamRef), %% final, closing stream
     {keep_state, State0#{streams => Streams1}};
 connected(info
          , {gun_data, GunPid, StreamRef, nofin, Data}
