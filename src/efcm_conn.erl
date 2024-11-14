@@ -177,7 +177,7 @@ connected(info
     #{streams := Streams0} = State0,
     #{StreamRef := StreamData} = Streams0,
     lager:debug("final data response, data: ~p, stream data: ~p", [Data, StreamData]),
-    #{from := From, status := Status, body := B0} = StreamData,
+    #{from := From, status := Status, body := B0, push_id := PushId} = StreamData,
     FullBody = <<B0/binary, Data/binary>>,
     %% xxx: should we process 401 (refresh token) status here?
     case Status of
@@ -186,6 +186,10 @@ connected(info
             #{name := Name} = jsx:decode(FullBody, ?JSX_OPTS),
             MsgId = lists:last(binary:split(Name, <<"/">>, [global, trim_all])),
             gen_statem:reply(From, {ok, MsgId});
+        404 ->
+            %% wrong (expired?) push id, specific error
+            lager:debug("push id not found: ~s", [PushId]),
+            gen_statem:reply(From, {error, wrong_push_id});
         _ ->
             %% unknown status, replying with error
             gen_statem:reply(From, {error, {Status, FullBody}})
