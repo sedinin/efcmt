@@ -177,7 +177,7 @@ connected(info
     #{streams := Streams0} = State0,
     #{StreamRef := StreamData} = Streams0,
     lager:debug("final data response, data: ~p, stream data: ~p", [Data, StreamData]),
-    #{from := From, status := Status, body := B0, push_id := PushId} = StreamData,
+    #{from := From, status := Status, body := B0, reg_id := PushId} = StreamData,
     FullBody = <<B0/binary, Data/binary>>,
     %% xxx: should we process 401 (refresh token) status here?
     case Status of
