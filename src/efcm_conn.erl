@@ -192,6 +192,7 @@ connected(info
             gen_statem:reply(From, {error, wrong_push_id});
         _ ->
             %% unknown status, replying with error
+            lager:debug("unknown error: ~B : ~p", [Status, FullBody]),
             gen_statem:reply(From, {error, {Status, FullBody}})
     end,
     Streams1 = maps:remove(StreamRef, Streams0),
