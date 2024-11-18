@@ -305,7 +305,8 @@ handle_common(info
              , StateName
              , #{gun_pid := GunPid, gun_mon := GunMon} = State0
              , _) ->
-    %% gun died, answering with errors, cleanup entries
+    %% gun died, answering with errors, cleanup entries, reconnect
+    lager:debug("gun process ~p died with reason: ~p", [GunPid, Reason]),
     #{streams := Streams} = State0,
     spawn(efcm_conn, reply_errors_and_cancel_timers, [Streams, Reason]),
     {next_state, down, State0#{gun_streams => #{}},
@@ -315,6 +316,8 @@ handle_common(state_timeout
              , StateName
              , #{gun_pid := GunPid} = State
              , _) ->
+    lager:debug("state (~p) timeout on gun connection: ~p, event: ~p",
+                [StateName, GunPid, EventContent]),
     gun:close(GunPid),
     {next_state, down, State,
      {next_event, internal, {state_timeout, StateName, EventContent}}};
