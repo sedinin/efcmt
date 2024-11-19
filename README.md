@@ -28,6 +28,6 @@ __1.0.0__
 2> {ok, MessId} = efcm:push(Pid, RegId, Message).
 ```
 
-In order to understand `Message` payload see [Message Syntax](https://firebase.google.com/docs/cloud-messaging/ht
-tp-server-ref#send-downstream).
+In order to understand `Message` payload see 
+[Message Syntax](https://firebase.google.com/docs/cloud-messaging/http-server-ref#send-downstream).
 or [Refer to HTTP v1](https://firebase.google.com/docs/cloud-messaging/send-message#rest)
