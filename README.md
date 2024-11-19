@@ -33,6 +33,5 @@ or [Refer to HTTP v1 API](https://firebase.google.com/docs/cloud-messaging/send-
 
 ## Credits
 
-The project was inspired from:
 * [pankajsoni19/fcm-erlang](https://github.com/pankajsoni19/fcm-erlang)
 * [inaka/apns4erl](https://github.com/inaka/apns4erl)
